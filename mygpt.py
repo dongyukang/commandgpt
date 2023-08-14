@@ -2,7 +2,29 @@ import os
 import openai
 from dotenv import load_dotenv
 import time
+import threading
 
+
+def loading_animation():
+    global loading
+    print("Loading   ", end='', flush=True)
+    i = 0
+    while loading:
+        if i % 4 == 0:
+            print("\b\b\b...", end='', flush=True)
+        elif i % 4 == 1:
+            print("\b\b\b ..", end='', flush=True)
+        elif i % 4 == 2:
+            print("\b\b\b. .", end='', flush=True)
+        elif i % 4 == 3:
+            print("\b\b\b   ", end='', flush=True)
+        time.sleep(0.3)
+        i += 1
+
+def stop_loading_animation():
+    global loading
+    loading = False
+    print("\b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\b", end='', flush=True) # 10 backspaces to clear "Loading...", 10 spaces to overwrite, then 10 more backspaces
 
 def read_file(file_path_from_user):
     # Optional: Join with specific base directory
@@ -69,6 +91,11 @@ try:
                 "content": user_message
             })
 
+        global loading
+        loading = True
+        t = threading.Thread(target=loading_animation)
+        t.start()
+
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=conversation_history,
@@ -78,6 +105,10 @@ try:
             frequency_penalty=0,
             presence_penalty=0
         )
+        
+        loading = False
+        stop_loading_animation()
+        t.join()
 
         # Extract the generated message from the response
         generated_message = response['choices'][0]['message']['content']
