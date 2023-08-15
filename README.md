@@ -2,6 +2,8 @@
 
 This project implements an interactive chatbot using OpenAI's GPT-3.5 model, providing a typing effect and a loading animation in the command-line interface.
 
+![Screen Shot](https://i.imgur.com/khIGf2q.png)
+
 ## Features
 
 - **Loading Animation:** While waiting for the GPT-3.5 response, a dynamic loading animation is displayed to the user.
