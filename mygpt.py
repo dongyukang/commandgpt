@@ -73,23 +73,12 @@ try:
     while True:
         # Get user's next message
         user_message = input("YOU: ")
-
-              # Check for the /read command
-        if "/read " in user_message:
-            question, file_path = user_message.split(" /read ", 1)
-            file_content = read_file(file_path.strip())
-
-            # Add the user's question and the content of the file to the conversation history
-            conversation_history.append({
-                "role": "user",
-                "content": f"{question}\nContent of the file:\n{file_content}"
-            })
-        else:
-            # Add the user's message to the conversation history
-            conversation_history.append({
-                "role": "user",
-                "content": user_message
-            })
+        
+        # Add the user's message to the conversation history
+        conversation_history.append({
+            "role": "user",
+            "content": user_message
+        })
 
         global loading
         loading = True
