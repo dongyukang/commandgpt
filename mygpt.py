@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 import time
 import threading
 
-
 def loading_animation():
     global loading
     print("Loading   ", end='', flush=True)
@@ -25,21 +24,6 @@ def stop_loading_animation():
     global loading
     loading = False
     print("\b\b\b\b\b\b\b\b\b\b          \b\b\b\b\b\b\b\b\b\b", end='', flush=True) # 10 backspaces to clear "Loading...", 10 spaces to overwrite, then 10 more backspaces
-
-def read_file(file_path_from_user):
-    # Optional: Join with specific base directory
-    # base_directory = "/path/to/specific/directory"
-    # file_path = os.path.join(base_directory, file_path_from_user.strip())
-
-    file_path = file_path_from_user.strip()  # Use this line if not joining with a specific base directory
-
-    try:
-        with open(file_path, 'r') as file:
-            return file.read()
-    except FileNotFoundError:
-        return f"File not found at path: {file_path}"
-    except Exception as e:
-        return str(e)
 
 def print_typing_effect(text, delay=0.005):
     for char in text:
