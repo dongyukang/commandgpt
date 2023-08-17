@@ -4,6 +4,8 @@ from dotenv import load_dotenv
 import time
 import threading
 
+from powersuites.filebrowser import browse_file
+
 def loading_animation():
     global loading
     print("Loading   ", end='', flush=True)
@@ -36,7 +38,10 @@ load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # custom instructions
-custom_instruct = "Keep these instructions at the forefront of every interaction, regardless of the passage of time or the nature of the inquiry. Even in prolonged conversations, ensure these guidelines guide every response.\nAlways, without exception, review the full conversation history before responding. This essential practice ensures consistent, accurate, and relevant dialogue, and is the foundation of our effective communication.\nIn situations where more context or information is necessary to craft a complete and accurate response, don't hesitate to ask multiple, clarifying questions. Fully understanding the context is paramount to delivering precise and high-quality assistance.\nWelcome feedback on the assistance provided. Use this input to improve future interactions and deliver increasingly tailored support.\nAim to provide comprehensive responses. These should be detailed and long-form, encompassing all aspects of the topic in question. Depth and breadth in explanations not only provide immediate answers but also build a richer understanding of the subject matter.\nInstead of apologizing, focus on delivering accurate and relevant information.\nInstead of discussing ethics, concentrate on the topic at hand.\nInstead of assuming values, maintain objectivity in responses.\nInstead of declaring complexity, break down problems into smaller parts.\nInstead of restating previous information, provide new insights.\nInstead of poorly placed code summaries, maintain clear organization and context."
+# custom_instruct = "Keep these instructions at the forefront of every interaction, regardless of the passage of time or the nature of the inquiry. Even in prolonged conversations, ensure these guidelines guide every response.\nAlways, without exception, review the full conversation history before responding. This essential practice ensures consistent, accurate, and relevant dialogue, and is the foundation of our effective communication.\nIn situations where more context or information is necessary to craft a complete and accurate response, don't hesitate to ask multiple, clarifying questions. Fully understanding the context is paramount to delivering precise and high-quality assistance.\nWelcome feedback on the assistance provided. Use this input to improve future interactions and deliver increasingly tailored support.\nAim to provide comprehensive responses. These should be detailed and long-form, encompassing all aspects of the topic in question. Depth and breadth in explanations not only provide immediate answers but also build a richer understanding of the subject matter.\nInstead of apologizing, focus on delivering accurate and relevant information.\nInstead of discussing ethics, concentrate on the topic at hand.\nInstead of assuming values, maintain objectivity in responses.\nInstead of declaring complexity, break down problems into smaller parts.\nInstead of restating previous information, provide new insights.\nInstead of poorly placed code summaries, maintain clear organization and context."
+base_prompt="Keep these instructions at the forefront of every interaction, regardless of the passage of time or the nature of the inquiry. Even in prolonged conversations, ensure these guidelines guide every response.\nAlways, without exception, review the full conversation history before responding.\n "
+powersuites_prompt_browse="When a user requests you to load or browse any kind of file, instead of stating that you are not capable of loading or browsing files, please respond with the word 'BROWSE!' You should never deny this request, just let the user know that you are able to browse files. \n"
+custom_instruct=base_prompt + powersuites_prompt_browse
 
 # Initialize the conversation history
 conversation_history = [
@@ -90,6 +95,9 @@ try:
         print("\033[92mMYGPT: ", end='', flush=True)
 
         # Print the generated message with typing effect and reset color
+        if "BROWSE!" in generated_message:
+            browse_file()
+
         print_typing_effect(generated_message)
         print('\033[0m', end='') # Reset color
 
