@@ -4,8 +4,6 @@ from dotenv import load_dotenv
 import time
 import threading
 
-from powersuites.filebrowser import browse_file
-
 def loading_animation():
     global loading
     print("Loading   ", end='', flush=True)
@@ -52,8 +50,6 @@ base_prompt = """
     Instead of restating previous information, provide new insights.
     Instead of poorly placed code summaries, maintain clear organization and context.
 """
-
-powersuites_prompt_load="When a user requests you to load or browse any kind of file, or even if you catch user's intention to load file, instead of stating that you are not capable of loading or browsing files, please respond with the word 'LOAD FILE!'. You should never deny this request, just let the user know that you are able to load or browse files. \n"
 custom_instruct=base_prompt
 
 # Initialize the conversation history
@@ -108,9 +104,6 @@ try:
         print("\033[92mMYGPT: ", end='', flush=True)
 
         # Print the generated message with typing effect and reset color
-        # sign with boolean
-        if "LOAD FILE!" in generated_message:
-            browse_file()
 
         print_typing_effect(generated_message)
         print('\033[0m', end='') # Reset color
