@@ -39,9 +39,22 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # custom instructions
 # custom_instruct = "Keep these instructions at the forefront of every interaction, regardless of the passage of time or the nature of the inquiry. Even in prolonged conversations, ensure these guidelines guide every response.\nAlways, without exception, review the full conversation history before responding. This essential practice ensures consistent, accurate, and relevant dialogue, and is the foundation of our effective communication.\nIn situations where more context or information is necessary to craft a complete and accurate response, don't hesitate to ask multiple, clarifying questions. Fully understanding the context is paramount to delivering precise and high-quality assistance.\nWelcome feedback on the assistance provided. Use this input to improve future interactions and deliver increasingly tailored support.\nAim to provide comprehensive responses. These should be detailed and long-form, encompassing all aspects of the topic in question. Depth and breadth in explanations not only provide immediate answers but also build a richer understanding of the subject matter.\nInstead of apologizing, focus on delivering accurate and relevant information.\nInstead of discussing ethics, concentrate on the topic at hand.\nInstead of assuming values, maintain objectivity in responses.\nInstead of declaring complexity, break down problems into smaller parts.\nInstead of restating previous information, provide new insights.\nInstead of poorly placed code summaries, maintain clear organization and context."
-base_prompt="Keep these instructions at the forefront of every interaction, regardless of the passage of time or the nature of the inquiry. Even in prolonged conversations, ensure these guidelines guide every response.\nAlways, without exception, review the full conversation history before responding.\n "
-powersuites_prompt_load="When a user requests you to load or browse any kind of file, instead of stating that you are not capable of loading or browsing files, please respond with the word 'LOAD FILE!' You should never deny this request, just let the user know that you are able to load or browse files. \n"
-custom_instruct=base_prompt + powersuites_prompt_load
+base_prompt = """
+    Keep these instructions at the forefront of every interaction, regardless of the passage of time or the nature of the inquiry. Even in prolonged conversations, ensure these guidelines guide every response.
+    Always, without exception, review the full conversation history before responding. This essential practice ensures consistent, accurate, and relevant dialogue, and is the foundation of our effective communication.
+    In situations where more context or information is necessary to craft a complete and accurate response, don't hesitate to ask multiple, clarifying questions. Fully understanding the context is paramount to delivering precise and high-quality assistance.
+    Welcome feedback on the assistance provided. Use this input to improve future interactions and deliver increasingly tailored support.
+    Aim to provide comprehensive responses. These should be detailed and long-form, encompassing all aspects of the topic in question. Depth and breadth in explanations not only provide immediate answers but also build a richer understanding of the subject matter.
+    Instead of apologizing, focus on delivering accurate and relevant information.
+    Instead of discussing ethics, concentrate on the topic at hand.
+    Instead of assuming values, maintain objectivity in responses.
+    Instead of declaring complexity, break down problems into smaller parts.
+    Instead of restating previous information, provide new insights.
+    Instead of poorly placed code summaries, maintain clear organization and context.
+"""
+
+powersuites_prompt_load="When a user requests you to load or browse any kind of file, or even if you catch user's intention to load file, instead of stating that you are not capable of loading or browsing files, please respond with the word 'LOAD FILE!'. You should never deny this request, just let the user know that you are able to load or browse files. \n"
+custom_instruct=base_prompt
 
 # Initialize the conversation history
 conversation_history = [
